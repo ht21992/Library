@@ -1,0 +1,37 @@
+{% if genreFilter  %}
+<div class="text-center mb-5">
+    <h5 class="text-primary text-uppercase mb-3" >Searched For</h5>
+    <h1>{{genreFilter}}</h1>
+
+</div>
+{% elif searchFilter %}
+<div class="text-center mb-5">
+  <h5 class="text-primary text-uppercase mb-3" >Searched For</h5>
+  <h1>{{searchFilter}}</h1>
+</div>
+
+{% endif %}
+{% for b in books %}
+<div class="col-md-3">
+  <div class="product-item">
+    <figure class="product-style">
+      <img src="{{b.image}}" alt="Books" class="product-item" />
+    </figure>
+    <figcaption>
+      <h4>{{b.title}}</h4>
+      <span>{{b.author}}</span>
+    </figcaption>
+  </div>
+</div>
+{% empty %}
+<div class="text-center mb-5">
+  <h5 class="text-primary text-uppercase mb-3" >Nothing Found</h5>
+</div>
+
+{% endfor %}
+
+<div class="col-12 mt-5" >
+  {% if books|length > 0 %}
+  {% include 'frontend/pagination/pagination.html' with objects=books divId="booksAndPagination" temp_type="book" pageName="bookPage" %}
+  {% endif %}
+</div>

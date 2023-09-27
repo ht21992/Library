@@ -1,0 +1,61 @@
+<nav aria-label="Page navigation">
+    <ul class="pagination pagination-lg justify-content-center mb-0">
+        {% if objects.has_previous %}
+
+
+        <li class="page-item">
+            <a class="page-link"  href="#books" aria-label="Previous" hx-target="#{{divId}}" hx-trigger="click"
+                hx-get="{% url 'frontend:get_objects_partials' %}"
+                hx-vals='{"{{pageName}}": {{ objects.previous_page_number }}, "type":"{{temp_type}}",  "searchFilter":"{{genreFilter}}"  }'>
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Perv</span>
+            </a>
+        </li>
+
+        {% endif %}
+        {% for i in objects.paginator.page_range %}
+        {% if objects.number == i %}
+
+        <li class="page-item active"><a class="page-link"  href="#books" >{{ i }}</a></li>
+
+        {% else %}
+
+
+
+        {% if i < 10 %} <li class="page-item"><a class="page-link"  href="#books"  hx-target="#{{divId}}" hx-trigger="click"
+                hx-get="{% url 'frontend:get_objects_partials' %}"
+                hx-vals='{"{{pageName}}": {{i}}, "type":"{{temp_type}}", "genreFilter":"{{genreFilter}}" , "searchFilter":"{{searchFilter}}" }'>{{i}}</a></li>
+            {% endif %}
+
+            {% endif %}
+
+
+            {% endfor %}
+
+
+            {% if objects.paginator.num_pages > 10 %}
+            <a class="mx-2 page-link">...</a>
+            {% if objects.number != objects.paginator.num_pages %}
+            <a class="mx-2 page-link"  href="#books" hx-target="#{{divId}}" hx-trigger="click"
+            hx-get="{% url 'frontend:get_objects_partials' %}"
+            hx-vals='{"{{pageName}}": {{objects.paginator.num_pages}}, "type":"{{temp_type}}", "genreFilter":"{{genreFilter}}" , "searchFilter":"{{searchFilter}}" }'>
+                {{ objects.paginator.num_pages }}</a>
+            {% endif %}
+
+            {% endif %}
+
+            {% if objects.has_next %}
+            <li class="page-item">
+                <a class="page-link"  href="#books" aria-label="Next" hx-target="#{{divId}}" hx-trigger="click"
+                    hx-get="{% url 'frontend:get_objects_partials' %}"
+                    hx-vals='{"{{pageName}}": {{ objects.next_page_number }}, "type":"{{temp_type}}", "genreFilter":"{{genreFilter}}" , "searchFilter":"{{searchFilter}}"  }'>
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+
+
+            {% endif %}
+
+    </ul>
+</nav>

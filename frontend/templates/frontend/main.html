@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section id="billboard" >
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-md-12">
+                <button class="prev slick-arrow">
+                    <i class="icon icon-arrow-left"></i>
+                </button>
+
+                <div class="main-slider pattern-overlay">
+
+                    {% for b in bannerBooks %}
+                    <div class="slider-item">
+                        <div class="banner-content">
+                            <h3 class="banner-title">{{b.title}}</h3>
+                            <p>{{b.description|truncatewords:15}}</p>
+                            <div class="btn-wrap">
+                                <a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i
+                                        class="icon icon-ns-arrow-right"></i></a>
+                            </div>
+                        </div><!--banner-content-->
+                        <img src="{{b.image}}" alt="banner" class="banner-image" style="height:600px">
+                    </div><!--slider-item-->
+                    {% endfor %}
+
+                </div><!--slider-->
+
+                <button class="next slick-arrow">
+                    <i class="icon icon-arrow-right"></i>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+<section id="featured-books" class="py-5 my-5">
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="section-header align-center">
+                    <h2 class="section-title">Featured Books</h2>
+                </div>
+                <div class="product-list" data-aos="fade-up">
+                    <div class="row">
+                        {% for fb in featuredBooks %}
+                        <div class="col-md-3">
+                            <div class="product-item">
+                                <figure class="product-style">
+                                    <img src="{{fb.image}}" alt="Books" class="product-item" >
+                                </figure>
+                                <figcaption>
+                                    <h3>{{fb.title}}</h3>
+                                    <span>{{fb.author}}</span>
+                                </figcaption>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div><!--ft-books-slider-->
+                </div><!--grid-->
+            </div><!--inner-content-->
+        </div>
+
+    </div>
+</section>
+
+<section id="best-selling" class="leaf-pattern-overlay">
+    <div class="corner-pattern-overlay"></div>
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-8">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <figure class="products-thumb">
+                            <img src="{{recommendedBook.image}}" alt="book" class="single-image">
+                        </figure>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="product-entry">
+                            <h2 class="section-title divider">Recommendation</h2>
+
+                            <div class="products-content">
+                                <div class="author-name">By {{recommendedBook.author}}</div>
+                                <h3 class="item-title">{{recommendedBook.title}}</h3>
+                                <p>{{recommendedBook.description|truncatewords:35}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- / row -->
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section id="books" class="bookshelf py-5 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="section-header align-center">
+                    <h2 class="section-title">Books</h2>
+                </div>
+                <ul class="tabs">
+                    <li href="#" hx-target="#booksAndPagination" hx-trigger="click"
+                    hx-get="{% url 'frontend:get_objects_partials' %}"
+                    hx-vals='{"bookPage": 1, "type":"book" }'  class="tab" >All Genre</li>
+                    <li hx-target="#booksAndPagination" hx-trigger="click"
+                    hx-get="{% url 'frontend:get_objects_partials' %}"
+                    hx-vals='{"bookPage": 1, "type":"book", "genreFilter":"Fiction" }' class="tab">Fiction</li>
+                    <li hx-target="#booksAndPagination" hx-trigger="click"
+                    hx-get="{% url 'frontend:get_objects_partials' %}"
+                    hx-vals='{"bookPage": 1, "type":"book", "genreFilter":"Technology" }' class="tab">Technology</li>
+                    <li hx-target="#booksAndPagination" hx-trigger="click"
+                    hx-get="{% url 'frontend:get_objects_partials' %}"
+                    hx-vals='{"bookPage": 1, "type":"book", "genreFilter":"Romantic" }' class="tab">Romantic</li>
+                    <li hx-target="#booksAndPagination" hx-trigger="click"
+                    hx-get="{% url 'frontend:get_objects_partials' %}"
+                    hx-vals='{"bookPage": 1, "type":"book", "genreFilter":"Adventure" }' class="tab">Adventure</li>
+                    <li hx-target="#booksAndPagination" hx-trigger="click"
+                    hx-get="{% url 'frontend:get_objects_partials' %}"
+                    hx-vals='{"bookPage": 1, "type":"book", "genreFilter":"History" }' class="tab">History</li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="all-genre" data-tab-content class="active">
+                        <div class="row" id="booksAndPagination">
+                            {% include 'frontend/partials/books_partial.html' %}
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div><!--inner-tabs-->
+
+        </div>
+    </div>
+</section>
+
+<section id="quotation" class="align-center pb-5 mb-5">
+    <div class="inner-content">
+        <h2 class="section-title divider">Quote of the day</h2>
+        <blockquote data-aos="fade-up">
+            <q>“The more that you read, the more things you will know. The more that you learn, the more places
+                you’ll go.”</q>
+            <div class="author-name">Dr. Seuss</div>
+        </blockquote>
+    </div>
+</section>
+
+{% endblock content %}
